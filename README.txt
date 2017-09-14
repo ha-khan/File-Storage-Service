@@ -1,1 +1,0 @@
-# Basic File Storage Service.
