@@ -1,3 +1,3 @@
 # Basic File Storage Service.
 
-Run the specified scripts where...
+View/Run the supplied shell scripts, uses Python 2.7 and Apache Thrift. 
