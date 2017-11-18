@@ -6,6 +6,9 @@ https://blogs.dropbox.com/tech/2014/07/streaming-file-synchronization/
 
 ## Getting Started
 
+### Directory Structure
+
+
 ### Requirements
 
 The project uses Python 2.7 and apache thrift is needed to compile the thrift files. 
@@ -27,3 +30,5 @@ six (1.11.0)
 thrift (0.10.0)
 wheel (0.30.0)
  ```
+
+### Starting up Block/Metadata Server
