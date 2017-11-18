@@ -1,4 +1,4 @@
-# Unit Tests. 
+# Unit Tests.
 #!/usr/bin/env python
 
 import sys
@@ -20,30 +20,23 @@ from blockServer.ttypes import *
 from blockServer import BlockServerService
 from metadataServer import MetadataServerService
 
-# Server Handlers. 
+# Server Handlers.
 from BSS import BSS
 from MDD import MDD
 
 
-
-
-
 def testDeleteIncorrectHash(res):
     if res.message != responseType.OK:
-	print "testDeleteIncorrectHash: PASS"
+        print "testDeleteIncorrectHash: PASS"
     else:
-	print "testDeleteIncorrectHash: FAIL"	
+        print "testDeleteIncorrectHash: FAIL"
     pass
-
-
-
-
 
 
 if(__name__ == "__main__"):
     print "Starting BlockServer Tester"
-    
-    port = int(7080) # NOTE: Make sure this and config.txt are equivalent.
+
+    port = int(7080)  # NOTE: Make sure this and config.txt are equivalent.
 
     BlockServerServiceState = BSS(port)
     bHandler = BlockServerServiceState.ConnectAndReturnHandler()
