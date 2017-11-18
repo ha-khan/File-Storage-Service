@@ -15,7 +15,7 @@ https://blogs.dropbox.com/tech/2014/07/streaming-file-synchronization/
     ├── src                     # location of (client, block server, metadata server) code along with thrift code.
     ├── tests                   # Location of testing files. 
     ├── README.md
-    ├── config.txt
+    ├── config.txt              # Configures the servers with their listening ports. 
     └── requirements.txt 
 
 ### Requirements
@@ -41,3 +41,5 @@ wheel (0.30.0)
  ```
 
 ### Starting up Block/Metadata Server
+The scripts folder contains the various scripts to compile the thrift
+files as well as start up the client, block server, and metadata server. 
