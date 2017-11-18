@@ -14,3 +14,6 @@ the programs. This project is also composed of a virtualenv which will also be n
 in your python modules. 
 
 ### Starting the virtualenv
+'''
+source filestorage/bin/activate
+'''
