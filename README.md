@@ -11,9 +11,19 @@ https://blogs.dropbox.com/tech/2014/07/streaming-file-synchronization/
 The project uses Python 2.7 and apache thrift is needed to compile the thrift files. 
 The requirements.txt file contains the list of python modules that are needed to run 
 the programs. This project is also composed of a virtualenv which will also be needed
-in your python modules. 
+in your python modules. The pip package manager is also used 
 
 ### Starting the virtualenv
 ```
 source filestorage/bin/activate
+pip list
 ```
+Running pip list will show all of the modules in this virtualenv, which will be 
+isolated from your global modules. Mine shows the following. 
+```
+pip (9.0.1)
+setuptools (36.7.2)
+six (1.11.0)
+thrift (0.10.0)
+wheel (0.30.0)
+ ```
