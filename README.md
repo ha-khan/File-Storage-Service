@@ -8,7 +8,7 @@ https://blogs.dropbox.com/tech/2014/07/streaming-file-synchronization/
 
 ### Directory Structure
     .
-    ├── files                   # Folder where files are uploaded/downloaded to and from.
+    ├── files                   # Folder where files are uploaded/downloaded.
     ├── filestorage             # Virtualenv for this project.
     ├── gen-py                  # Generated from thrift compiler.
     ├── scripts                 # Start up shell scripts for the (client, block server, metadata server)
