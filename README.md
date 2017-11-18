@@ -7,7 +7,16 @@ https://blogs.dropbox.com/tech/2014/07/streaming-file-synchronization/
 ## Getting Started
 
 ### Directory Structure
-
+    .
+    ├── files                   # Folder where files are uploaded/downloaded to and from.
+    ├── filestorage             # Virtualenv for this project.
+    ├── gen-py                  # Generated from thrift compiler.
+    ├── scripts                 # Start up shell scripts for the (client, block server, metadata server)
+    ├── src                     # location of (client, block server, metadata server) code along with thrift code.
+    ├── tests                   # Location of testing files. 
+    ├── README.md
+    ├── config.txt
+    └── requirements.txt 
 
 ### Requirements
 
