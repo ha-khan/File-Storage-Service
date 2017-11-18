@@ -12,5 +12,5 @@ CONFIGFILE_PATH=$1
 ID=$2
 
 
-python /Users/hamzakhan/Desktop/Career/File-Storage-Service/src/MetadataServer.py $CONFIGFILE_PATH $ID
+python /Users/hamzakhan/Desktop/CAREER/Projects/File-Storage-Service/src/MetadataServer.py $CONFIGFILE_PATH $ID
 

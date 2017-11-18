@@ -14,4 +14,4 @@ COMMAND=$3
 FILENAME_OR_UPLOADDIR=$4
 
 
-python /Users/hamzakhan/Desktop/Career/File-Storage-Service/src/Client.py $CONFIGFILE_PATH $DOWNLOAD_DIR $COMMAND $FILENAME_OR_UPLOADDIR
+python /Users/hamzakhan/Desktop/CAREER/Projects/File-Storage-Service/src/Client.py $CONFIGFILE_PATH $DOWNLOAD_DIR $COMMAND $FILENAME_OR_UPLOADDIR
