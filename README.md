@@ -1,4 +1,4 @@
-# Distributed File Storage Service.
+# Distributed File Storage Service
 This project is composed of a client program, a block server, and a metadata server. All three components are located in the 
 src folder. This project is essentially a Dropbox clone which currently works on a single host environment with IPC using the thrift RPC framework. The following link serves as an inspiration for how the upload/download client works as well as the structure of both the blockfile server and metadata server.
 
