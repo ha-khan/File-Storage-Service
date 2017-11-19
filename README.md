@@ -45,7 +45,8 @@ $ deactivate
 ```
 
 ### Starting up Block/Metadata Server
-Run the scripts in the document root of the project. 
+Run the scripts in the document root of the project.
+Note: Each script needs to run in its own terminal window.  
 ```
 bash scripts/runBlockServer.sh config.txt             # Start the blockfile server on the port specified in the config.txt file
 bash scripts/runMetaServer.sh config.txt 1            # Start the metadata server on the port specified in the config.txt and give it some ID.
@@ -54,10 +55,15 @@ bash scripts/runMetaServer.sh config.txt 1            # Start the metadata serve
 A thing to note is that in the shell scripts; the path to the python scripts located in src folder will need to be changed 
 according to your filesystem. 
 
-#### On a correct startup
+#### Blockfile server start up
 ```
 (filestorage) HAK:File-Storage-Service hamzakhan$ bash scripts/runBlockServer.sh config.txt 
 Initializing block server
 Starting server on port :  7080
 ```
-
+#### Metadata server start up
+```
+(filestorage) HAK:File-Storage-Service hamzakhan$ bash scripts/runMetaServer.sh config.txt 1 
+Initializing metadata server
+Starting server on port :  10080
+```
