@@ -27,8 +27,8 @@ in your python modules. The pip package manager is also used
 
 ### Starting the virtualenv
 ```
-source filestorage/bin/activate
-pip list
+ source filestorage/bin/activate
+ pip list
 ```
 Running pip list will show all of the modules in this virtualenv, which will be 
 isolated from your global modules. Mine shows the following. 
@@ -41,5 +41,9 @@ wheel (0.30.0)
  ```
 
 ### Starting up Block/Metadata Server
-The scripts folder contains the various scripts to compile the thrift
-files as well as start up the client, block server, and metadata server. 
+The scripts folder contains the following:
+```
+build.sh                    # Compile the thrift files.
+runBlockServer.sh           # Start the block server on the port specified in the config.txt file.
+runMetaServer.sh            # Start the metadata server on the port specified in the config.txt.
+```
