@@ -27,8 +27,8 @@ in your python modules. The pip package manager is also used
 
 ### Starting the virtualenv
 ```
- source filestorage/bin/activate
- pip list
+source filestorage/bin/activate
+pip list
 ```
 Running pip list will show all of the modules in this virtualenv, which will be 
 isolated from your global modules. Mine shows the following. 
@@ -44,6 +44,9 @@ wheel (0.30.0)
 The scripts folder contains the following:
 ```
 build.sh                    # Compile the thrift files.
-runBlockServer.sh           # Start the block server on the port specified in the config.txt file.
-runMetaServer.sh            # Start the metadata server on the port specified in the config.txt.
+runBlockServer.sh           # Start the block server on the port specified in the config.txt file
+runMetaServer.sh            # Start the metadata server on the port specified in the config.txt
 ```
+
+A thing to note is that in the shell scripts; the path to the python scripts located in src folder will need to be changed 
+according to your filesystem. 
