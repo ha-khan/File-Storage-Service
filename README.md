@@ -67,3 +67,4 @@ Starting server on port :  7080
 Initializing metadata server
 Starting server on port :  10080
 ```
+## Using the Client 
