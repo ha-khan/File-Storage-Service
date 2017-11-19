@@ -41,11 +41,10 @@ wheel (0.30.0)
  ```
 
 ### Starting up Block/Metadata Server
-The scripts folder contains the following:
+Run the scripts in the document root of the project. 
 ```
-build.sh                    # Compile the thrift files.
-runBlockServer.sh           # Start the block server on the port specified in the config.txt file
-runMetaServer.sh            # Start the metadata server on the port specified in the config.txt
+bash scripts/runBlockServer.sh config.txt             # Start the block server on the port specified in the config.txt file
+bash scripts/runMetaServer.sh config.txt 1            # Start the metadata server on the port specified in the config.txt and give it some ID.
 ```
 
 A thing to note is that in the shell scripts; the path to the python scripts located in src folder will need to be changed 
