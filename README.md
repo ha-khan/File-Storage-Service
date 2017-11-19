@@ -31,12 +31,7 @@ $ source filestorage/bin/activate
 $ pip list
 ```
 Running pip list will show all of the modules in this virtualenv, which will be 
-isolated from your global modules. Mine shows the following. Type deactivate to 
-end the virtualenv.
-```
-$ deactivate         
-```
-
+isolated from your global modules. Mine shows the following.
 ```
 pip (9.0.1)
 setuptools (36.7.2)
@@ -44,6 +39,12 @@ six (1.11.0)
 thrift (0.10.0)
 wheel (0.30.0)
  ```
+ Type deactivate to end the virtualenv.
+```
+$ deactivate         
+```
+
+ 
 
 ### Starting up Block/Metadata Server
 Run the scripts in the document root of the project. 
