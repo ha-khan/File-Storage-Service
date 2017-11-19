@@ -5,7 +5,11 @@ src folder. This project is essentially a Dropbox clone which currently works on
 https://blogs.dropbox.com/tech/2014/07/streaming-file-synchronization/
 
 
-##WARNING!!
+## WARNING
+Make sure to test upload/download with files that you have a lot of copies of. 
+If you upload a file and then delete it from the directory and one of the 
+servers crashes on your computer, then you will lose that file. I suggest 
+testing it with the various files that I have set in the files directory. 
 
 
 
@@ -101,3 +105,5 @@ ERROR
 ```
 
 While the error message is not exactly the easiest to decipher, we essentially tried to upload a file that does not exist. 
+
+Download and delete work the same way and will give an error message if download/delete is unsuccessful. 
