@@ -5,6 +5,10 @@ src folder. This project is essentially a Dropbox clone which currently works on
 https://blogs.dropbox.com/tech/2014/07/streaming-file-synchronization/
 
 
+##WARNING!!
+
+
+
 ## Requirements
 
 The project uses Python 2.7 and apache thrift is needed to compile the thrift files. 
@@ -82,5 +86,18 @@ bash scripts/runClient.sh <config_file> <base_dir> <command> <filename>
 <filename>              # The file that the client program will operate on. 
 ```
 
+#### Client successful upload
+```
+(filestorage) HAK:File-Storage-Service hamzakhan$ bash scripts/runClient.sh config.txt files upload DC-Computer_Test.pdf
+OK
+(filestorage) HAK:File-Storage-Service hamzakhan$ 
+```
 
+#### Client unsuccessful upload
+```
+(filestorage) HAK:File-Storage-Service hamzakhan$ bash scripts/runClient.sh config.txt files upload DC-ComputTest.pdf
+ERROR
+(filestorage) HAK:File-Storage-Service hamzakhan$ 
+```
 
+While the error message is not exactly the easiest to decipher, we essentially tried to upload a file that does not exist. 
