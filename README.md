@@ -27,11 +27,16 @@ in your python modules. The pip package manager is also used
 
 ### Starting the virtualenv
 ```
-source filestorage/bin/activate
-pip list
+$ source filestorage/bin/activate
+$ pip list
 ```
 Running pip list will show all of the modules in this virtualenv, which will be 
-isolated from your global modules. Mine shows the following. 
+isolated from your global modules. Mine shows the following. Type deactivate to 
+end the virtualenv.
+```
+$ deactivate         
+```
+
 ```
 pip (9.0.1)
 setuptools (36.7.2)
@@ -49,3 +54,10 @@ bash scripts/runMetaServer.sh config.txt 1            # Start the metadata serve
 
 A thing to note is that in the shell scripts; the path to the python scripts located in src folder will need to be changed 
 according to your filesystem. 
+
+
+```
+(filestorage) HAK:File-Storage-Service hamzakhan$ bash scripts/runBlockServer.sh config.txt 
+Initializing block server
+Starting server on port :  7080
+```
