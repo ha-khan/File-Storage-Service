@@ -68,3 +68,19 @@ Initializing metadata server
 Starting server on port :  10080
 ```
 ## Using the Client 
+Now that both the Blockfile server and Metadata server are up, the client program 
+can be used. 
+```
+bash scripts/runClient.sh <config_file> <base_dir> <command> <filename>         
+
+<config_file>           # Exactly like the previous scripts. 
+
+<base_dir>              # The directory path from which the files are uploaded from and download to. 
+
+<command>               # One of the following commands: upload, download, delete. 
+
+<filename>              # The file that the client program will operate on. 
+```
+
+
+
