@@ -4,6 +4,14 @@ src folder. This project is essentially a Dropbox clone which currently works on
 
 https://blogs.dropbox.com/tech/2014/07/streaming-file-synchronization/
 
+
+## Requirements
+
+The project uses Python 2.7 and apache thrift is needed to compile the thrift files. 
+The requirements.txt file contains the list of python modules that are needed to run 
+the programs. This project is also composed of a virtualenv which will also be needed
+in your python modules. The pip package manager is also used 
+
 ## Getting Started
 
 ### Directory Structure
@@ -17,13 +25,6 @@ https://blogs.dropbox.com/tech/2014/07/streaming-file-synchronization/
     ├── README.md
     ├── config.txt              # Configures the servers with their listening ports. 
     └── requirements.txt 
-
-### Requirements
-
-The project uses Python 2.7 and apache thrift is needed to compile the thrift files. 
-The requirements.txt file contains the list of python modules that are needed to run 
-the programs. This project is also composed of a virtualenv which will also be needed
-in your python modules. The pip package manager is also used 
 
 ### Starting the virtualenv
 ```
@@ -43,8 +44,6 @@ wheel (0.30.0)
 ```
 $ deactivate         
 ```
-
- 
 
 ### Starting up Block/Metadata Server
 Run the scripts in the document root of the project. 
