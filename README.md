@@ -38,7 +38,7 @@ six (1.11.0)
 thrift (0.10.0)
 wheel (0.30.0)
  ```
- Type deactivate to end the virtualenv.
+ Type deactivate to end the virtualenv when done.
 ```
 $ deactivate         
 ```
