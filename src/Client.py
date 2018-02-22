@@ -22,9 +22,10 @@ from metadataServer import MetadataServerService
 # Server Handlers.
 from BSS import BSS
 from MDD import MDD
+
+# Abstract away some of the client functionality. 
 from TritonTransfer import TritonTransfer
 
-# Driver program on the client side.
 
 
 
@@ -42,8 +43,7 @@ def UploadFileAndBlocks(BlockServerServiceState,  clientHandler, FileName, HashL
 
 
 # NOTE: Assumption is that Blocks are local and stored in clientHandler.FileBlockList
-#       And that the guide to build the filr back up is in OrderedHashList.
-# OK.
+#       And that the guide to build the file back up is in OrderedHashList.
 def CombineBlocksToFile(clientHandler, FileName, OrderedHashList):
     hLIST = []
     for hash in OrderedHashList:  # change this.
@@ -65,7 +65,6 @@ def FindMissingBlocks(MetadataServerServiceHandler, FileName, clientHandler):
     if responseFile.status == responseType.OK:
         # Total Blocks that make up this file.
         BlockServerList = responseFile.hashList
-        # Need to check whether FileName is saved..NOTE: sec ar == []
         MissingBlocks = GetBlocksFromList(BlockServerList, clientHandler)
         return MissingBlocks
     else:
@@ -127,7 +126,7 @@ def DownloadMissingBlocks(clientHandler, FileName, BlockServ, MissingBlocks):
 # TODO:  MetaData and MetaData->BlockServer.
 def main():
 
-    # print "Starting Client"
+    print "Starting Client"
 
     # Variables Declared.
     clientHandler = TritonTransfer(sys.argv)
@@ -139,8 +138,7 @@ def main():
 
     # Read config.txt, and parse ports of type int.
     blockPort = clientHandler.ParsePort("block", "config.txt")
-    metaDataPort = clientHandler.ParsePort(
-        "metadata1", "config.txt")  # Would need to change for Part2
+    metaDataPort = clientHandler.ParsePort("metadata1", "config.txt")  
 
     # State Controllers for Metadata/Block Servers.
     BlockServerServiceState = BSS(blockPort)
@@ -178,7 +176,6 @@ def main():
         else:
             print "ERROR"
         pass
-    # NOTE: Fix this
     elif clientHandler.OperationType == "delete":
         fileDel = clientHandler.GenerateFile(FileName)
         response = MetadataServerServiceHandler.deleteFile(fileDel)

@@ -18,8 +18,20 @@ from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol
 
 
+#   hashBlock is a struct of the following. 
+# struct hashBlock {
+#	1: string hash,
+#	2: binary block,
+#	3: string status
+#}
 
-# TritonTransfer Object file.
+#struct hashBlocks {
+#	1: list<hashBlock> blocks
+#}
+
+
+
+# TritonTransfer Class file.
 class TritonTransfer():
 
     def __init__(self, argumentList):
@@ -79,7 +91,6 @@ class TritonTransfer():
                 self.FileToHashList[FileName] = orderedHashList
                 return HMAP
                 break
-        # Ideally; Don't need this..
         self.FileToHashList[FileName] = orderedHashList
         return HMAP
         pass
