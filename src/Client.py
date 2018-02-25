@@ -25,102 +25,10 @@ from MDD import MDD
 
 # Abstract away some of the client functionality. 
 from TritonTransfer import TritonTransfer
+from UDC import UDC
 
 
 
-
-# main() functions.
-def UploadFileAndBlocks(BlockServerServiceState,  clientHandler, FileName, HashList, FileToSend, MetadataServerServiceHandler):
-    BlockServerServiceHandler = BlockServerServiceState.ConnectAndReturnHandler()
-    # Need to close and reopen.
-    clientHandler.UploadFileBlocks(
-        FileName, HashList, BlockServerServiceHandler)
-    BlockServerServiceState.CloseConnection()  # Connection is closed.
-    secondResponse = clientHandler.UploadFile(
-        FileToSend, MetadataServerServiceHandler)
-    clientHandler.OutputResponseToConsole(secondResponse.status)
-    pass
-
-
-# NOTE: Assumption is that Blocks are local and stored in clientHandler.FileBlockList
-#       And that the guide to build the file back up is in OrderedHashList.
-def CombineBlocksToFile(clientHandler, FileName, OrderedHashList):
-    hLIST = []
-    for hash in OrderedHashList:  # change this.
-        for key in clientHandler.FileBlockList:
-            if hash in clientHandler.FileBlockList[key]:
-                hLIST.append(clientHandler.FileBlockList[key][hash].block)
-                break  # So to not copy more
-    fd = open(clientHandler.FileDirectory + FileName, "wb")
-    temp = "".join([str(x) for x in hLIST])
-    fd.write(temp)
-    fd.close()
-    pass
-
-
-# NOTE: Returns a list of missing blocks.
-def FindMissingBlocks(MetadataServerServiceHandler, FileName, clientHandler):
-    # Returns File Obj.
-    responseFile = MetadataServerServiceHandler.getFile(FileName)
-    if responseFile.status == responseType.OK:
-        # Total Blocks that make up this file.
-        BlockServerList = responseFile.hashList
-        MissingBlocks = GetBlocksFromList(BlockServerList, clientHandler)
-        return MissingBlocks
-    else:
-        return None
-    pass
-
-
-# NOTE: OK.
-def CheckUploadResponseStatus(uResponse):
-    return uResponse.status == uploadResponseType.OK
-    pass
-
-
-def PrintStoredBlocks(clientHandler):
-    for key in clientHandler.FileBlockList:
-        for h in clientHandler.FileBlockList[key]:
-            print clientHandler.FileBlockList[key][h].hash
-    pass
-
-
-# NOTE: OK.
-def FileOK(response):
-    return response.message == responseType.OK
-
-
-# NOTE: Returns a list of blocks that were NOT locally stored in cHandler.
-def GetBlocksFromList(HashList, cHandler):
-    MissingBlocks = []
-    Flag = False
-    for hash in HashList:
-        for key in cHandler.FileBlockList:
-            if hash in cHandler.FileBlockList[key]:
-                Flag = True
-        if not Flag:
-            MissingBlocks.append(hash)
-        Flag = False  # For next round.
-    return MissingBlocks
-    pass
-
-
-# NOTE: Need to test out hashBLK Return
-def DownloadMissingBlocks(clientHandler, FileName, BlockServ, MissingBlocks):
-    BlockServerHandler = BlockServ.ConnectAndReturnHandler()
-    # This overwrites the data...deleting it.
-    if not FileName in clientHandler.FileBlockList:
-        clientHandler.FileBlockList[FileName] = {}
-
-    for blk in MissingBlocks:
-        hashBlk = BlockServerHandler.getBlock(blk)
-        if hashBlk != None:
-            clientHandler.FileBlockList[FileName][blk] = hashBlk
-        else:
-            return False
-    BlockServ.CloseConnection()
-    return True
-    pass
 
 
 # TODO:  MetaData and MetaData->BlockServer.
@@ -129,16 +37,21 @@ def main():
     print "Starting Client"
 
     # Variables Declared.
-    clientHandler = TritonTransfer(sys.argv)
+    #clientHandler = TritonTransfer(sys.argv)
+    cHandler = UDC(sys.argv)
+
+    
     FileName = sys.argv[4]
 
     # Read all files in directory; and create a mapping of all available blocks.
-    EveryFile = os.listdir(clientHandler.FileDirectory)
-    clientHandler.storeLocalFiles(EveryFile)
+    EveryFile = os.listdir(cHandler.clientHandler.FileDirectory)
+
+    #clientHandler.storeLocalFiles(EveryFile)
+    cHandler.storeLocalFiles(EveryFile)
 
     # Read config.txt, and parse ports of type int.
-    blockPort = clientHandler.ParsePort("block", "config.txt")
-    metaDataPort = clientHandler.ParsePort("metadata1", "config.txt")  
+    blockPort = cHandler.parsePort("block","config.txt")#clientHandler.ParsePort("block", "config.txt")
+    metaDataPort = cHandler.parsePort("metadata1","config.txt")#clientHandler.ParsePort("metadata1", "config.txt")  
 
     # State Controllers for Metadata/Block Servers.
     BlockServerServiceState = BSS(blockPort)
@@ -148,36 +61,36 @@ def main():
     MetadataServerServiceHandler = MetadataServerServiceState.ConnectAndReturnHandler()
 
     # Client Operation Exectution.
-    if clientHandler.OperationType == "upload":
-        FileToSend = clientHandler.GenerateFile(FileName)
+    # Create appropriate getters...
+    if cHandler.clientHandler.OperationType == "upload":
+        FileToSend = cHandler.generateFile(FileName)
         if FileToSend.status == responseType.OK:
             # BlockServiceServer Handler in Metadata is closed.
-            response = clientHandler.UploadFile(
+            response = cHandler.uploadFile(
                 FileToSend, MetadataServerServiceHandler)
             if response.status == uploadResponseType.MISSING_BLOCKS:
-                UploadFileAndBlocks(BlockServerServiceState,  clientHandler, FileName,
+                cHandler.uploadFileAndBlocks(BlockServerServiceState, FileName,
                                     response.hashList, FileToSend, MetadataServerServiceHandler)
             else:
-                clientHandler.OutputResponseToConsole(response.status)
+                cHandler.output(response.status)
         else:
             print "ERROR"
-    elif clientHandler.OperationType == "download":
+    elif cHandler.clientHandler.OperationType == "download":
         FileData = MetadataServerServiceHandler.getFile(FileName)
         OrderedHashList = FileData.hashList
         # Check here if file already exist on loc using OrderedHashList
-        MissingBlocks = FindMissingBlocks(
-            MetadataServerServiceHandler, FileName, clientHandler)
+        MissingBlocks = cHandler.findMissingBlocks(MetadataServerServiceHandler, FileName)
         if MissingBlocks != None:
-            if DownloadMissingBlocks(clientHandler, FileName, BlockServerServiceState, MissingBlocks):
-                CombineBlocksToFile(clientHandler, FileName, OrderedHashList)
+            if cHandler.downloadMissingBlocks(FileName, BlockServerServiceState, MissingBlocks):
+                cHandler.combineBlocksToFile(FileName, OrderedHashList)
                 print "OK"
             else:
                 print "ERROR"
         else:
             print "ERROR"
         pass
-    elif clientHandler.OperationType == "delete":
-        fileDel = clientHandler.GenerateFile(FileName)
+    elif cHandler.OperationType == "delete":
+        fileDel = cHandler.generateFile(FileName)
         response = MetadataServerServiceHandler.deleteFile(fileDel)
         if response.message == responseType.OK:
             print "OK"
