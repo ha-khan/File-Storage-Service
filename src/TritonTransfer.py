@@ -1,4 +1,4 @@
-
+# Legacy code from my CSE 124 course.
 import sys
 import os
 import hashlib
@@ -18,20 +18,17 @@ from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol
 
 
-#   hashBlock is a struct of the following. 
-# struct hashBlock {
-#	1: string hash,
-#	2: binary block,
-#	3: string status
-#}
-
-#struct hashBlocks {
-#	1: list<hashBlock> blocks
-#}
 
 
-
-# TritonTransfer Class file.
+# TritonTransfer Class file, which is essentially the legacy code of the project
+# that I completed in undergrad around 2017. It was previously embedded in the client.py
+# file; which also has functions removed from it and incorporated in another class file. 
+#
+#
+#
+#
+#
+#
 class TritonTransfer():
 
     def __init__(self, argumentList):
@@ -46,18 +43,21 @@ class TritonTransfer():
         self.FileToHashList = {}
         pass
 
+    # Fixes the given string(file path). 
     def __CheckDirectoryPath(self):
         if self.FileDirectory[-1] != "/":
             self.FileDirectory = self.FileDirectory + "/"
         pass
 
+    #TODO: Remove this... 
     def CheckArgumentAmount(self, argumentList):
         if len(argumentList) < 5:
             print "Invocation : <executable> <config_file> <base_dir> <command> <filename>"
             exit(-1)
         pass
 
-    # NOTE: Extendble to other HASH Functions.
+    # Input: string(hType), string(FName)
+    # Return: Dict{hash, block} or None
     def BreakFileAndComputHash(self, hType, FName):
         if hType == "sha256":
             return self.__BreakFileHelper("sha256", FName)
@@ -66,13 +66,15 @@ class TritonTransfer():
             pass
         pass
 
-    # NOTE: (string)fileList; List of file names in Directory.
+    # Input: (string)fileList; List of file names in Directory.
+    # Return: None, but populates FileBlockList {File_Name->dict(Hash->hashBlock(type)} 
     def storeLocalFiles(self, fileList):
         for file in fileList:
             self.FileBlockList[file] = self.__BreakFileHelper("sha256", file)
         pass
 
-    # NOTE: Breaks a file into 4MB blocks and returns a HASH->hashBlock mapping for entire file.
+    # Input: string(hType), string(FileName)
+    # Return: Breaks a file into 4MB blocks and returns a Dict{HASH->hashBlock} mapping for entire file.
     def __BreakFileHelper(self, hType, FileName):
         FPATH = self.FileDirectory + FileName
         FileDes = open(FPATH, "rb")
@@ -96,32 +98,33 @@ class TritonTransfer():
         pass
 
     # NOTE: Uploads the blocks that are mising on the BlockServer.
-    #      Also, BSS.storeBlock returns a response type. However, this
-    #      Function doesn't return anything
+    #       Also, BSS.storeBlock returns a response type. However, this
+    #       Function doesn't return anything
     def UploadFileBlocks(self, FileName, MissingHashList, BSS):
         for hash in MissingHashList:
             temp = self.FileBlockList[FileName][hash]
             BSS.storeBlock(temp)
         pass
 
-    # TODO: Port is returned as int.
-    # change this to be more modular.
+    # Input: string(serverType), string(configFile)
+    # Output: int(port_binding)
     def ParsePort(self, serverType, configFile):
         f = open(configFile)
         for l in f:
-            if serverType in l:  # Implication that serverType is of type string....
+            if serverType in l:  
                 p1 = l.index(":") + 2
                 p2 = (len(l))
                 return int(l[p1:p2])
         pass
 
-    # NOTE: (file)FileToSend ->  uploadResponse(resp)
+    # Input: (file)FileToSend, MDD(MDS)
+    # Return: response(resp)
     def UploadFile(self, FileToSend, MDS):
         resp = MDS.storeFile(FileToSend)
         return resp
         pass
 
-    # NOTE: Should be an outside function.
+    # TODO: Remove this.
     def OutputResponseToConsole(self, response):
         if response == uploadResponseType.MISSING_BLOCKS:
             print "MISSING BLOCKS"
@@ -135,7 +138,8 @@ class TritonTransfer():
             print "UNKNOWN RESPONSE"
         pass
 
-    # TODO: (string)FileName -> file(temp)
+    # Input: (string)FileName 
+    # Return: file(temp)
     def GenerateFile(self, FileName):
         if FileName in self.FileBlockList:
             temp = file()
