@@ -22,14 +22,18 @@ from thrift.protocol import TBinaryProtocol
 #
 # This file contains the implementation code for the Blockfile Server, which essentially keeps track
 # of a dictionary that contains (hn) -> {Bn}, where each hn is the key and hashed signature for the 
-# block of bytes, that is the value. 
+# block of bytes. 
 #
 class BlockServerHandler():
 
+    # Input: None
+    # Return: None
     def __init__(self):
         self.blocks = {}  # Hash -> Block
         pass
 
+    # Input: hashBlock(hachBlock)
+    # Return: response(r)
     def storeBlock(self, hashBlock):
         if not hashBlock.hash in self.blocks:
             self.blocks[hashBlock.hash] = hashBlock
@@ -42,7 +46,8 @@ class BlockServerHandler():
             return r
         pass
 
-    # NOTE: In case of hash (key) not in storage, return None.
+    # Input: string(hash)
+    # Return: binary(self.blocks[hash]) or None.
     def getBlock(self, hash):
         if hash in self.blocks:
             return self.blocks[hash]
@@ -50,6 +55,8 @@ class BlockServerHandler():
             return None
         pass
 
+    # Input: string(hash)
+    # Return: response(r)
     def deleteBlock(self, hash):
         if hash in self.blocks:
             del self.blocks[hash]
@@ -62,6 +69,8 @@ class BlockServerHandler():
             return r
         pass
 
+    # Input: string(hash)
+    # Return: bool
     def hasBlock(self, hash):
         if hash in self.blocks:
             return True
@@ -69,7 +78,8 @@ class BlockServerHandler():
             return False
         pass
 
-
+# Input: string(fPath)
+# Return: string(l[p1:p2])
 def readServerPort(fPath):
     f = open(fPath)
     for l in f:

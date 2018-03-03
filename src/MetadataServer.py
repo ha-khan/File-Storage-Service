@@ -30,13 +30,16 @@ from BSS import BSS
 #
 class MetadataServerHandler():
 
+    # Input: string(config_path), string(my_id) 
+    # Return: None
     def __init__(self, config_path, my_id):
         self.config_path = config_path
         self.my_id = my_id
         self.FileHashList = {}  # HashMap of  FileName : Ordered list of hash that compose file.
         pass
-
-    # NOTE that the version number is not initialized in the file() struct.
+    
+    # Input: string(filename)
+    # Return: file(temp)
     def getFile(self, filename):
         if filename in self.FileHashList:
             temp = file()
@@ -50,7 +53,8 @@ class MetadataServerHandler():
             return temp
         pass
 
-    # NOTE: If file already uploaded, returns OK regardless.  
+    # Input: file(file)  
+    # Return: uploadResponse(resp)
     def storeFile(self, file):
         MissingList = self.__CheckForBlockList(file.hashList)
         if len(MissingList) != 0:
@@ -65,6 +69,8 @@ class MetadataServerHandler():
         return resp
         pass
 
+    # Input: file(fileDel)
+    # Return: response(resp)
     def deleteFile(self, fileDel):
         filename = fileDel.filename
         if filename in self.FileHashList:
@@ -78,6 +84,8 @@ class MetadataServerHandler():
             return resp
         pass
 
+    # Input: string(serverName)
+    # Return: int(l[p1:p2])
     def readServerPort(self, serverName):
         f = open(self.config_path)
         for l in f:
@@ -87,6 +95,8 @@ class MetadataServerHandler():
                 return int(l[p1:p2])
         pass
 
+    # Input: list<string>(HashList) 
+    # Return: list<string>(MissingBlocks)
     def __CheckForBlockList(self, HashList):
         # Search for port of block server from config.txt
         port = self.readServerPort("block")
