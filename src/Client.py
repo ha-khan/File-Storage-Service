@@ -31,7 +31,6 @@ from UDC import UDC
 
 
 
-# TODO:  MetaData and MetaData->BlockServer.
 def main():
 
     print "Starting Client"

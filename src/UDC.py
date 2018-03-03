@@ -1,10 +1,3 @@
-# Class definition file, which will abstract away functionality written in client.
-# To make client less intensive. Will act as a wrapper for TritonTransfer, which is my legacy code...
-# 
-# 
-# 
-
-
 import sys
 import os
 import hashlib
@@ -30,19 +23,35 @@ from MDD import MDD
 # Abstract away some of the client functionality. 
 from TritonTransfer import TritonTransfer
 
-
+# Class definition file, which will abstract the file upload, download, and delete functions and make it easier for
+# a client file to use. Currently acts as a wrapper for TritonTransfer; which is the legacy code that 
+# was used to help the Client file upload, download, and delete files.
+# 
+# 
 class UDC():
+
+    # Input: List<string>(argumentList)
+    # Return: None
     def __init__(self, argumentList):
-        self.clientHandler = TritonTransfer(sys.argv)
+        self.clientHandler = TritonTransfer(sys.argv) # make private
         pass
 
+    # Input: List<string>(fileList)
+    # Return: None
+    # NOTE: That this will populate the Dictionary in TritonTransfer, which stores a 
+    # local listing of all the files in the directory including their corresponding Hash->blocks..
     def storeLocalFiles(self, fileList):
         self.clientHandler.storeLocalFiles(fileList)
         pass
 
+    # Input: string(serverType), string(configFile)
+    # Return: int(port corresponding to this server {metadata, blockfile})
     def parsePort(self, serverType, configFile):
         return self.clientHandler.ParsePort(serverType, configFile)
     
+    # Input: BSS(BlockServerServiceState), string(FileName), List<string>(HashList), file(FileToSend), MDD(MetadataServerServiceHandler)
+    # Return: Outputs to console the status of the response code.. 
+    # TODO: Change this to a return.
     def uploadFileAndBlocks(self, BlockServerServiceState, FileName, HashList, FileToSend, MetadataServerServiceHandler):
         BlockServerServiceHandler = BlockServerServiceState.ConnectAndReturnHandler()
         self.clientHandler.UploadFileBlocks(FileName, HashList, BlockServerServiceHandler)
@@ -51,15 +60,23 @@ class UDC():
         self.clientHandler.OutputResponseToConsole(secondResponse.status)
         pass
 
+    # Input: string(FileName)
+    # Return: file()
     def generateFile(self, FileName):
         return self.clientHandler.GenerateFile(FileName)
         
+    # Input: file(FileToSend), MDD(MDS)
+    # Return: response()
     def uploadFile(self, FileToSend, MDS):
         return self.clientHandler.UploadFile(FileToSend, MDS)
     
+    # Input: response(response)
+    # Return: Outputs to console, which needs to be changed. 
     def output(self, response):
         self.clientHandler.OutputResponseToConsole(response)
 
+    # Input: 
+    # Return: 
     def findMissingBlocks(self, MetadataServerServiceHandler, FileName):
         # Returns File Obj.
         responseFile = MetadataServerServiceHandler.getFile(FileName)
@@ -72,7 +89,9 @@ class UDC():
             return None
         pass
 
-    # NOTE: Returns a list of blocks that were NOT locally stored in cHandler.
+    # NOTE: Returns a list of blocks that are NOT locally stored in cHandler.
+    # Input: List<string>
+    # Return: List<string> 
     def __GetBlocksFromList(self, HashList):
         MissingBlocks = []
         Flag = False
@@ -86,7 +105,8 @@ class UDC():
         return MissingBlocks
         pass
 
-    # NOTE: Need to test out hashBLK Return
+    # Input: string(FileName), BSS(BlockServ), List<string>(MissingBlocks)
+    # Return: bool - Always returns True, modify later.  
     def downloadMissingBlocks(self, FileName, BlockServ, MissingBlocks):
         BlockServerHandler = BlockServ.ConnectAndReturnHandler()
         # This overwrites the data...deleting it.
@@ -105,6 +125,8 @@ class UDC():
 
     # NOTE: Assumption is that Blocks are local and stored in clientHandler.FileBlockList
     #       And that the guide to build the file back up is in OrderedHashList.
+    # Input: string(FileName), List<string>(Hash_Signature) 
+    # Return: None. 
     def combineBlocksToFile(self, FileName, OrderedHashList):
         hLIST = []
         for hash in OrderedHashList:  # change this.
