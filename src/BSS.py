@@ -7,7 +7,8 @@ from blockServer.ttypes import *
 from blockServer import BlockServerService
 
 
-# Make an abstract base class? 
+# Class that helps initialize the handler and connect it to the Metadata Server
+# And allows the client process to make RPC to the Blockfile Server.   
 class BSS():
     def __init__(self, port):
         self.port = port
@@ -26,8 +27,8 @@ class BSS():
         pass
 
     def CloseConnection(self):
-	self.transport.close()
-	pass
+	    self.transport.close()
+	    pass
 
 
 
