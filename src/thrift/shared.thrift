@@ -4,7 +4,6 @@ namespace cpp shared
 namespace py shared
 namespace java shared
 
-// Data type for common responses and ACK
 enum responseType {
 	OK = 1,
 	ERROR
@@ -35,4 +34,3 @@ struct file {
 	5: responseType status
 }
 
-// Add any data structure you need here
