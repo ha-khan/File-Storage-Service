@@ -17,20 +17,26 @@ from shared.ttypes import *
 from blockServer.ttypes import *
 from blockServer import BlockServerService
 
-
+# Bindings to communicate with Blockfile server.
 from BSS import BSS
 
 
+
+# Review the files in the thrift folder titled metadataServer.thrift and shared.thrift. 
+#
+# This file contains the implementation code for the Metadata Server, which essentially keeps track
+# of a dictionary that contains (file name) -> {h1, h2, h3, ..., hn}, where each h1 ... hn is a hashed
+# signature of a block that is contained in the original file. 
+#
 class MetadataServerHandler():
 
     def __init__(self, config_path, my_id):
-        # Initialize block
         self.config_path = config_path
         self.my_id = my_id
-        self.FileHashList = {}  # HashMap of  FileName : Ordered HashBlockList
+        self.FileHashList = {}  # HashMap of  FileName : Ordered list of hash that compose file.
         pass
 
-    # NOTE: OK.
+    # NOTE that the version number is not initialized in the file() struct.
     def getFile(self, filename):
         if filename in self.FileHashList:
             temp = file()
@@ -44,7 +50,7 @@ class MetadataServerHandler():
             return temp
         pass
 
-    # NOTE: If file already uploaded, returns OK regardless; -> Need to hav a var to keep track?
+    # NOTE: If file already uploaded, returns OK regardless.  
     def storeFile(self, file):
         MissingList = self.__CheckForBlockList(file.hashList)
         if len(MissingList) != 0:
@@ -59,7 +65,6 @@ class MetadataServerHandler():
         return resp
         pass
 
-    # NOTE: OK.
     def deleteFile(self, fileDel):
         filename = fileDel.filename
         if filename in self.FileHashList:
@@ -73,7 +78,6 @@ class MetadataServerHandler():
             return resp
         pass
 
-    # NOTE: OK.
     def readServerPort(self, serverName):
         f = open(self.config_path)
         for l in f:
@@ -83,7 +87,6 @@ class MetadataServerHandler():
                 return int(l[p1:p2])
         pass
 
-    # NOTE: OK
     def __CheckForBlockList(self, HashList):
         # Search for port of block server from config.txt
         port = self.readServerPort("block")
@@ -102,7 +105,6 @@ class MetadataServerHandler():
         pass
 
 
-# Add additional classes and functions here if needed
 # TODO: Add Try~Catch
 def main():
     if len(sys.argv) < 3:

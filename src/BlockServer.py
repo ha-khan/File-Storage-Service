@@ -17,13 +17,19 @@ from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol
 
 
+
+# Review the files in the thrift folder titled blockServer.thrift and shared.thrift. 
+#
+# This file contains the implementation code for the Blockfile Server, which essentially keeps track
+# of a dictionary that contains (hn) -> {Bn}, where each hn is the key and hashed signature for the 
+# block of bytes, that is the value. 
+#
 class BlockServerHandler():
 
     def __init__(self):
         self.blocks = {}  # Hash -> Block
         pass
 
-    # NOTE: OK
     def storeBlock(self, hashBlock):
         if not hashBlock.hash in self.blocks:
             self.blocks[hashBlock.hash] = hashBlock
@@ -36,16 +42,14 @@ class BlockServerHandler():
             return r
         pass
 
-    # NOTE: unsure of return in case of error, so I return None.
+    # NOTE: In case of hash (key) not in storage, return None.
     def getBlock(self, hash):
         if hash in self.blocks:
-            # print self.blocks[hash].status
             return self.blocks[hash]
         else:
             return None
         pass
 
-    # NOTE: OK
     def deleteBlock(self, hash):
         if hash in self.blocks:
             del self.blocks[hash]
@@ -58,7 +62,6 @@ class BlockServerHandler():
             return r
         pass
 
-    # NOTE: ok
     def hasBlock(self, hash):
         if hash in self.blocks:
             return True
@@ -67,7 +70,6 @@ class BlockServerHandler():
         pass
 
 
-# NOTE: OK
 def readServerPort(fPath):
     f = open(fPath)
     for l in f:
