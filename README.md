@@ -25,6 +25,8 @@ the programs.
     └── requirements.txt 
 
 ### Starting the virtualenv
+This project uses virtualenv, and when running on your local system make sure that 
+you delete the filestorage file, which is the virtualenv on my system. Create a virtualenv on your system and name it what ever you want.
 ```
 $ source filestorage/bin/activate
 $ pip list
