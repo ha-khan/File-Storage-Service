@@ -41,20 +41,17 @@ class TritonTransfer():
         self.FileBlockList = {}
         # To save the order of the HASH for FileName; mainly for when files are processed in local dir.
         self.FileToHashList = {}
-        pass
 
     # Fixes the given string(file path). 
     def __CheckDirectoryPath(self):
         if self.FileDirectory[-1] != "/":
             self.FileDirectory = self.FileDirectory + "/"
-        pass
 
     #TODO: Remove this... 
     def CheckArgumentAmount(self, argumentList):
         if len(argumentList) < 5:
             print "Invocation : <executable> <config_file> <base_dir> <command> <filename>"
             exit(-1)
-        pass
 
     # Input: string(hType), string(FName)
     # Return: Dict{hash, block} or None
@@ -63,15 +60,12 @@ class TritonTransfer():
             return self.__BreakFileHelper("sha256", FName)
         else:
             return None
-            pass
-        pass
 
     # Input: (string)fileList; List of file names in Directory.
     # Return: None, but populates FileBlockList {File_Name->dict(Hash->hashBlock(type)} 
     def storeLocalFiles(self, fileList):
         for file in fileList:
             self.FileBlockList[file] = self.__BreakFileHelper("sha256", file)
-        pass
 
     # Input: string(hType), string(FileName)
     # Return: Breaks a file into 4MB blocks and returns a Dict{HASH->hashBlock} mapping for entire file.
@@ -95,7 +89,6 @@ class TritonTransfer():
                 break
         self.FileToHashList[FileName] = orderedHashList
         return HMAP
-        pass
 
     # NOTE: Uploads the blocks that are mising on the BlockServer.
     #       Also, BSS.storeBlock returns a response type. However, this
@@ -104,7 +97,6 @@ class TritonTransfer():
         for hash in MissingHashList:
             temp = self.FileBlockList[FileName][hash]
             BSS.storeBlock(temp)
-        pass
 
     # Input: string(serverType), string(configFile)
     # Output: int(port_binding)
@@ -115,14 +107,12 @@ class TritonTransfer():
                 p1 = l.index(":") + 2
                 p2 = (len(l))
                 return int(l[p1:p2])
-        pass
 
     # Input: (file)FileToSend, MDD(MDS)
     # Return: response(resp)
     def UploadFile(self, FileToSend, MDS):
         resp = MDS.storeFile(FileToSend)
         return resp
-        pass
 
     # TODO: Remove this.
     def OutputResponseToConsole(self, response):
@@ -136,7 +126,6 @@ class TritonTransfer():
             print "ERROR"
         else:
             print "UNKNOWN RESPONSE"
-        pass
 
     # Input: (string)FileName 
     # Return: file(temp)
@@ -152,4 +141,3 @@ class TritonTransfer():
             temp = file()
             temp.status = responseType.ERROR
             return temp
-        pass
