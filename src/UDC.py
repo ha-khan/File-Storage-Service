@@ -34,7 +34,6 @@ class UDC():
     # Return: None
     def __init__(self, argumentList):
         self.clientHandler = TritonTransfer(sys.argv) # make private
-        pass
 
     # Input: List<string>(fileList)
     # Return: None
@@ -42,7 +41,6 @@ class UDC():
     # local listing of all the files in the directory including their corresponding Hash->blocks..
     def storeLocalFiles(self, fileList):
         self.clientHandler.storeLocalFiles(fileList)
-        pass
 
     # Input: string(serverType), string(configFile)
     # Return: int(port corresponding to this server {metadata, blockfile})
@@ -58,7 +56,6 @@ class UDC():
         BlockServerServiceState.CloseConnection()
         secondResponse = self.clientHandler.UploadFile(FileToSend, MetadataServerServiceHandler)
         self.clientHandler.OutputResponseToConsole(secondResponse.status)
-        pass
 
     # Input: string(FileName)
     # Return: file()
@@ -87,7 +84,6 @@ class UDC():
             return MissingBlocks
         else:
             return None
-        pass
 
     # NOTE: Returns a list of blocks that are NOT locally stored in cHandler.
     # Input: List<string>
@@ -103,7 +99,6 @@ class UDC():
                 MissingBlocks.append(hash)
             Flag = False  # For next round.
         return MissingBlocks
-        pass
 
     # Input: string(FileName), BSS(BlockServ), List<string>(MissingBlocks)
     # Return: bool - Always returns True, modify later.  
@@ -121,7 +116,6 @@ class UDC():
                 return False
         BlockServ.CloseConnection()
         return True
-        pass    
 
     # NOTE: Assumption is that Blocks are local and stored in clientHandler.FileBlockList
     #       And that the guide to build the file back up is in OrderedHashList.
@@ -138,4 +132,3 @@ class UDC():
         temp = "".join([str(x) for x in hLIST])
         fd.write(temp)
         fd.close()
-        pass    
