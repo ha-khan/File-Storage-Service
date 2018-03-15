@@ -20,7 +20,7 @@ from thrift.protocol import TBinaryProtocol
 from BSS import BSS
 from MDD import MDD
 
-# Abstract away some of the client functionality.
+# Legacy Code.
 from TritonTransfer import TritonTransfer
 
 # Class definition file, which will abstract the file upload, download, and delete functions and make it easier for
@@ -28,8 +28,6 @@ from TritonTransfer import TritonTransfer
 # was used to help the Client file upload, download, and delete files.
 #
 #
-
-
 class UDC():
 
     # Input: List<string>(argumentList)
@@ -41,10 +39,10 @@ class UDC():
         self.__BlockServerServiceState = BSS(self.__blockPort)
         self.__MetadataServerServiceState = MDD(self.__metaDataPort)
 
+    # NOTE: This will populate the Dictionary in TritonTransfer, which stores a
+    #       local listing of all the files in the directory including their corresponding Hash->blocks.
     # Input: List<string>(fileList)
     # Return: None
-    # NOTE: That this will populate the Dictionary in TritonTransfer, which stores a
-    # local listing of all the files in the directory including their corresponding Hash->blocks..
     def storeLocalFiles(self, fileList):
         self.__clientHandler.storeLocalFiles(fileList)
 
@@ -52,14 +50,15 @@ class UDC():
     # Return: int(port corresponding to this server {metadata, blockfile})
     def __parsePort(self, serverType, configFile):
         return self.__clientHandler.ParsePort(serverType, configFile)
-    
+
+    # Input: None
+    # Return: string(res) 
     def GetFileDirectory(self):
         res = self.__clientHandler.getFileDirectory()
         return res
 
     # Input: BSS(BlockServerServiceState), string(FileName), List<string>(HashList), file(FileToSend), MDD(MetadataServerServiceHandler)
-    # Return: Outputs to console the status of the response code..
-    # TODO: Change this to a return.
+    # Return: responseType(secondResponse.status) 
     def __uploadFileAndBlocks(self, BlockServerServiceState, FileName, HashList, FileToSend, MetadataServerServiceHandler):
         BlockServerServiceHandler = BlockServerServiceState.ConnectAndReturnHandler()
         self.__clientHandler.UploadFileBlocks(
@@ -79,8 +78,8 @@ class UDC():
     def __uploadFile(self, FileToSend, MDS):
         return self.__clientHandler.UploadFile(FileToSend, MDS)
 
-    # Input:
-    # Return:
+    # Input: MDD(MetadataServerServiceHandler), string(FileName)
+    # Return: List<string>
     def __findMissingBlocks(self, MetadataServerServiceHandler, FileName):
         # Returns File Obj.
         responseFile = MetadataServerServiceHandler.getFile(FileName)

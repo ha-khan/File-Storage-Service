@@ -46,11 +46,13 @@ class TritonTransfer():
     def __CheckDirectoryPath(self):
         if self.FileDirectory[-1] != "/":
             self.FileDirectory = self.FileDirectory + "/"
-    
+
+    # Input: None.
+    # Return: string(self.FileDictionary)    
     def getFileDirectory(self):
         return self.FileDirectory
 
-    #TODO: Remove this... 
+    #TODO: Move this to top level. 
     def CheckArgumentAmount(self, argumentList):
         if len(argumentList) < 5:
             print "Invocation : <executable> <config_file> <base_dir> <command> <filename>"
