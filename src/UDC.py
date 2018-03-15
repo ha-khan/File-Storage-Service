@@ -63,7 +63,7 @@ class UDC():
         BlockServerServiceState.CloseConnection()
         secondResponse = self.clientHandler.UploadFile(
             FileToSend, MetadataServerServiceHandler)
-        self.clientHandler.OutputResponseToConsole(secondResponse.status)
+        return secondResponse.status
 
     # Input: string(FileName)
     # Return: file()
@@ -75,10 +75,10 @@ class UDC():
     def uploadFile(self, FileToSend, MDS):
         return self.clientHandler.UploadFile(FileToSend, MDS)
 
-    # Input: response(response)
-    # Return: Outputs to console, which needs to be changed.
-    def output(self, response):
-        self.clientHandler.OutputResponseToConsole(response)
+    # # Input: response(response)
+    # # Return: Outputs to console, which needs to be changed.
+    # def output(self, response):
+    #     self.clientHandler.OutputResponseToConsole(response)
 
     # Input:
     # Return:
@@ -132,7 +132,7 @@ class UDC():
     # Return: None.
     def combineBlocksToFile(self, FileName, OrderedHashList):
         hLIST = []
-        for hash in OrderedHashList:  # change this.
+        for hash in OrderedHashList:  
             for key in self.clientHandler.FileBlockList:
                 if hash in self.clientHandler.FileBlockList[key]:
                     hLIST.append(
@@ -146,16 +146,14 @@ class UDC():
     def upload(self, FileName):
         FileToSend = self.generateFile(FileName)
         MetadataServerServiceHandler = self.__MetadataServerServiceState.ConnectAndReturnHandler()
-        print "Connect"
         if FileToSend.status == responseType.OK:
             response = self.uploadFile(FileToSend, MetadataServerServiceHandler)
-            print "Response"
             if response.status == uploadResponseType.MISSING_BLOCKS:
-                self.uploadFileAndBlocks(self.__BlockServerServiceState, FileName, response.hashList, FileToSend, MetadataServerServiceHandler)
+                return self.uploadFileAndBlocks(self.__BlockServerServiceState, FileName, response.hashList, FileToSend, MetadataServerServiceHandler)
             else:
-                self.output(response.status)
+                return response.status
         else:
-            print("ERROR")
+            return responseType.ERROR
 
     def download(self, FileName):
         MetadataServerServiceHandler = self.__MetadataServerServiceState.ConnectAndReturnHandler()
@@ -165,17 +163,14 @@ class UDC():
         if MissingBlocks != None:
             if self.downloadMissingBlocks(FileName, self.__BlockServerServiceState, MissingBlocks):
                 self.combineBlocksToFile(FileName, OrderedHashList)
-                print "OK"
+                return responseType.OK
             else:
-                print "ERROR"
+                return responseType.ERROR 
         else:
-            print "ERROR"
+            return responseType.ERROR
 
     def delete(self, FileName):
         fileDel = self.generateFile(FileName)
         MetadataServerServiceHandler = self.__MetadataServerServiceState.ConnectAndReturnHandler() 
         response =  MetadataServerServiceHandler.deleteFile(fileDel)
-        if response.message == responseType.OK:
-            print "OK"
-        else:
-            print "ERROR"
+        return response.message

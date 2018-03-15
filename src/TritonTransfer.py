@@ -114,19 +114,6 @@ class TritonTransfer():
         resp = MDS.storeFile(FileToSend)
         return resp
 
-    # TODO: Remove this.
-    def OutputResponseToConsole(self, response):
-        if response == uploadResponseType.MISSING_BLOCKS:
-            print "MISSING BLOCKS"
-        elif response == uploadResponseType.FILE_ALREADY_PRESENT:
-            print "FILE ALREADY PRESENT"
-        elif response == uploadResponseType.OK:
-            print "OK"
-        elif response == uploadResponseType.ERROR:
-            print "ERROR"
-        else:
-            print "UNKNOWN RESPONSE"
-
     # Input: (string)FileName 
     # Return: file(temp)
     def GenerateFile(self, FileName):

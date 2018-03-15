@@ -19,22 +19,26 @@ from blockServer.ttypes import *
 from blockServer import BlockServerService
 from metadataServer import MetadataServerService
 
-# Server Handlers.
-#from BSS import BSS
-#from MDD import MDD
-
 # Abstract away some of the client functionality. 
 # from TritonTransfer import TritonTransfer
 from UDC import UDC
 
-
+def OutputResponseToConsole(response):
+    if response == uploadResponseType.MISSING_BLOCKS:
+        print "MISSING BLOCKS"
+    elif response == uploadResponseType.FILE_ALREADY_PRESENT:
+        print "FILE ALREADY PRESENT"
+    elif response == uploadResponseType.OK:
+        print "OK"
+    elif response == uploadResponseType.ERROR:
+        print "ERROR"
+    else:
+        print "UNKNOWN RESPONSE"
 
 def main():
 
     print "Starting Client"
-    print "TO"
 
-    # Variables Declared.
     cHandler = UDC(sys.argv)
 
     # Gather FileName. 
@@ -48,10 +52,12 @@ def main():
 
     if cHandler.clientHandler.OperationType == "upload":
         print "Upload"
-        cHandler.upload(FileName)
+        result = cHandler.upload(FileName)
+        OutputResponseToConsole(result)
     elif cHandler.clientHandler.OperationType == "download":
         print "Download"
-        cHandler.download(FileName)
+        result = cHandler.download(FileName)
+        OutputResponseToConsole(result)
     elif cHandler.OperationType == "delete":
         print "Delete"
         cHandler.delete(FileName)
