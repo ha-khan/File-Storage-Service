@@ -41,8 +41,9 @@ def main():
 
     cHandler = UDC(sys.argv)
 
-    # Gather FileName. 
     FileName = sys.argv[4]
+
+    OperationType = sys.argv[3]
 
     # Read all files in directory; and create a mapping of all available blocks.
     EveryFile = os.listdir(cHandler.clientHandler.FileDirectory)
@@ -50,15 +51,15 @@ def main():
     # Store mapping of files in address space of client process. 
     cHandler.storeLocalFiles(EveryFile)
 
-    if cHandler.clientHandler.OperationType == "upload":
+    if OperationType == "upload":
         print "Upload"
         result = cHandler.upload(FileName)
         OutputResponseToConsole(result)
-    elif cHandler.clientHandler.OperationType == "download":
+    elif OperationType == "download":
         print "Download"
         result = cHandler.download(FileName)
         OutputResponseToConsole(result)
-    elif cHandler.OperationType == "delete":
+    elif OperationType == "delete":
         print "Delete"
         cHandler.delete(FileName)
     else:

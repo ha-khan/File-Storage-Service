@@ -35,7 +35,7 @@ class UDC():
     # Input: List<string>(argumentList)
     # Return: None
     def __init__(self, argumentList):
-        self.clientHandler = TritonTransfer(sys.argv)  # change this to argumentList
+        self.clientHandler = TritonTransfer(argumentList)  # change this to argumentList
         self.__blockPort = self.parsePort("block","config.txt")
         self.__metaDataPort = self.parsePort("metadata1","config.txt")
         self.__BlockServerServiceState = BSS(self.__blockPort)
