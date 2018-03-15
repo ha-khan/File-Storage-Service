@@ -19,8 +19,6 @@ from blockServer.ttypes import *
 from blockServer import BlockServerService
 from metadataServer import MetadataServerService
 
-# Abstract away some of the client functionality. 
-# from TritonTransfer import TritonTransfer
 from UDC import UDC
 
 def OutputResponseToConsole(response):
@@ -46,7 +44,7 @@ def main():
     OperationType = sys.argv[3]
 
     # Read all files in directory; and create a mapping of all available blocks.
-    EveryFile = os.listdir(cHandler.clientHandler.FileDirectory)
+    EveryFile = os.listdir(cHandler.GetFileDirectory())
 
     # Store mapping of files in address space of client process. 
     cHandler.storeLocalFiles(EveryFile)

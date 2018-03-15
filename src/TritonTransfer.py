@@ -46,6 +46,9 @@ class TritonTransfer():
     def __CheckDirectoryPath(self):
         if self.FileDirectory[-1] != "/":
             self.FileDirectory = self.FileDirectory + "/"
+    
+    def getFileDirectory(self):
+        return self.FileDirectory
 
     #TODO: Remove this... 
     def CheckArgumentAmount(self, argumentList):
