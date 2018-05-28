@@ -4,6 +4,7 @@
 import sys
 import os
 import hashlib
+import unittest
 
 
 sys.path.append('gen-py')

@@ -11,6 +11,6 @@ fi
 CONFIGFILE_PATH=$1
 ID=$2
 
-
+source filestorage/bin/activate
 python /Users/hamzakhan/Desktop/CAREER/Projects/File-Storage-Service/src/MetadataServer.py $CONFIGFILE_PATH $ID
 

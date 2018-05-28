@@ -13,5 +13,5 @@ DOWNLOAD_DIR=$2
 COMMAND=$3
 FILENAME_OR_UPLOADDIR=$4
 
-
+source filestorage/bin/activate
 python /Users/hamzakhan/Desktop/CAREER/Projects/File-Storage-Service/src/Client.py $CONFIGFILE_PATH $DOWNLOAD_DIR $COMMAND $FILENAME_OR_UPLOADDIR
