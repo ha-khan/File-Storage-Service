@@ -3,22 +3,8 @@
 import sys
 import os
 import hashlib
-
-
 sys.path.append('gen-py')
-
-# Thrift specific imports
-from thrift import Thrift
-from thrift.transport import TSocket
-from thrift.transport import TTransport
-from thrift.protocol import TBinaryProtocol
-
 from shared.ttypes import *
-from metadataServer.ttypes import *
-from blockServer.ttypes import *
-from blockServer import BlockServerService
-from metadataServer import MetadataServerService
-
 from UDC import UDC
 
 def OutputResponseToConsole(response):

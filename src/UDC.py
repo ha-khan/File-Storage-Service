@@ -5,7 +5,6 @@ import hashlib
 sys.path.append('gen-py')
 
 
-# from shared import responseType
 from blockServer import BlockServerService
 from blockServer.ttypes import *
 from shared.ttypes import *
@@ -26,7 +25,7 @@ from TritonTransfer import TritonTransfer
 # Class definition file, which will abstract the file upload, download, and delete functions and make it easier for
 # a client file to use. Currently acts as a wrapper for TritonTransfer; which is the legacy code that
 # was used to help the Client file upload, download, and delete files.
-#
+# TODO: Add more to this. 
 #
 class UDC():
 

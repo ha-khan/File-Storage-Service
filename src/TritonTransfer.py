@@ -1,4 +1,3 @@
-# Legacy code from my CSE 124 course.
 import sys
 import os
 import hashlib
@@ -6,7 +5,6 @@ import hashlib
 sys.path.append('gen-py')
 
 
-# from shared import responseType
 from blockServer import BlockServerService
 from blockServer.ttypes import *
 from shared.ttypes import *
@@ -21,13 +19,8 @@ from thrift.protocol import TBinaryProtocol
 
 
 # TritonTransfer Class file, which is essentially the legacy code of the project
-# that I completed in undergrad around 2017. It was previously embedded in the client.py
-# file; which also has functions removed from it and incorporated in another class file. 
-#
-#
-#
-#
-#
+# that I completed in undergrad around 2017. It was previously embedded in the client.py.
+# TODO: Add more to this. 
 #
 class TritonTransfer():
 
