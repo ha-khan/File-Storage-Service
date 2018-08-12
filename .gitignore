@@ -1,0 +1,4 @@
+/files/*
+/filestorage/*
+/gen-py/*
+*.pyc
