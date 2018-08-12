@@ -1,4 +1,6 @@
-files/*
-filestorage/*
-gen-py/*
+/files/
+/filestorage/
+/gen-py/
 src/*.pyc
+.vscode
+.idea

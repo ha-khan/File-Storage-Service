@@ -2,8 +2,9 @@
 
 import sys
 import os
-import hashlib
+
 sys.path.append('gen-py')
+
 from shared.ttypes import *
 from UDC import UDC
 
@@ -23,29 +24,29 @@ def main():
 
     print "Starting Client"
 
-    cHandler = UDC(sys.argv)
+    singleton = UDC(sys.argv)
 
-    FileName = sys.argv[4]
+    file_name = sys.argv[4]
 
-    OperationType = sys.argv[3]
+    operation_type = sys.argv[3]
 
     # Read all files in directory; and create a mapping of all available blocks.
-    EveryFile = os.listdir(cHandler.GetFileDirectory())
+    every_file = os.listdir(singleton.GetFileDirectory())
 
     # Store mapping of files in address space of client process. 
-    cHandler.storeLocalFiles(EveryFile)
+    singleton.storeLocalFiles(every_file)
 
-    if OperationType == "upload":
+    if operation_type == "upload":
         print "Upload"
-        result = cHandler.upload(FileName)
+        result = singleton.upload(file_name)
         OutputResponseToConsole(result)
-    elif OperationType == "download":
+    elif operation_type == "download":
         print "Download"
-        result = cHandler.download(FileName)
+        result = singleton.download(file_name)
         OutputResponseToConsole(result)
-    elif OperationType == "delete":
+    elif operation_type == "delete":
         print "Delete"
-        cHandler.delete(FileName)
+        singleton.delete(file_name)
     else:
         print "INPUT ERROR"
 

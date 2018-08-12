@@ -33,7 +33,7 @@ class UDC():
     # Return: None
     def __init__(self, argumentList):
         self.__clientHandler = TritonTransfer(argumentList)  # change this to argumentList
-        self.__blockPort = self.__parsePort("block","config.txt")
+        self.__blockPort = self.__parsePort("block","config.txt") # TODO: Need to add passed in path to config..
         self.__metaDataPort = self.__parsePort("metadata1","config.txt")
         self.__BlockServerServiceState = BSS(self.__blockPort)
         self.__MetadataServerServiceState = MDD(self.__metaDataPort)
