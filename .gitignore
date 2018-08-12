@@ -1,4 +1,4 @@
-/files/*
-/filestorage/*
-/gen-py/*
-*.pyc
+files/*
+filestorage/*
+gen-py/*
+src/*.pyc
