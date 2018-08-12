@@ -1,6 +1,6 @@
 /files/
 /filestorage/
 /gen-py/
-src/*.pyc
+/src/*.pyc
 .vscode
 .idea
