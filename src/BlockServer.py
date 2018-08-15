@@ -7,10 +7,8 @@ sys.path.append('gen-py')
 
 # from shared import responseType
 from blockServer import BlockServerService
-from blockServer.ttypes import *
 from shared.ttypes import *
 
-from thrift import Thrift
 from thrift.transport import TSocket
 from thrift.server import TServer
 from thrift.transport import TTransport

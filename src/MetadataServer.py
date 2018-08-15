@@ -1,21 +1,17 @@
 #!/usr/bin/env python
 
 import sys
+import logging
 sys.path.append('gen-py')
 
 # Thrift specific imports
-from thrift import Thrift
 from thrift.transport import TSocket
 from thrift.server import TServer
-from thrift.transport import TTransport
-from thrift.protocol import TBinaryProtocol
 
 # Protocol specific imports
 from metadataServer import MetadataServerService
-from metadataServer.ttypes import *
 from shared.ttypes import *
 from blockServer.ttypes import *
-from blockServer import BlockServerService
 
 # Bindings to communicate with Blockfile server.
 from BSS import BSS
@@ -36,8 +32,8 @@ class MetadataServerHandler():
         self.config_path = config_path
         self.my_id = my_id
         self.FileHashList = {}  # HashMap of  FileName : Ordered list of hash that compose file.
-        pass
-    
+        self.logger = logging.getLogger("MetadataServer-Logger")
+
     # Input: string(filename)
     # Return: file(temp)
     def getFile(self, filename):
@@ -51,23 +47,25 @@ class MetadataServerHandler():
             temp = file()
             temp.status = responseType.ERROR
             return temp
-        pass
 
     # Input: file(file)  
     # Return: uploadResponse(resp)
+    # TODO: Add an error case..
     def storeFile(self, file):
+        self.logger.info("Attempting to store file : %s", file.filename)
         MissingList = self.__CheckForBlockList(file.hashList)
         if len(MissingList) != 0:
+            self.logger.info("File %s : MISSING_BLOCKS", file.filename)
             resp = uploadResponse()
             resp.hashList = MissingList
             resp.status = uploadResponseType.MISSING_BLOCKS
         else:
+            self.logger.info("File %s : OK", file.filename)
             self.FileHashList[file.filename] = file.hashList
             resp = uploadResponse()
             resp.hashList = MissingList
             resp.status = uploadResponseType.OK
         return resp
-        pass
 
     # Input: file(fileDel)
     # Return: response(resp)
@@ -82,7 +80,6 @@ class MetadataServerHandler():
             resp = response()
             resp.message = responseType.ERROR
             return resp
-        pass
 
     # Input: string(serverName)
     # Return: int(l[p1:p2])
@@ -93,7 +90,6 @@ class MetadataServerHandler():
                 p1 = l.index(":") + 2
                 p2 = (len(l))
                 return int(l[p1:p2])
-        pass
 
     # Input: list<string>(HashList) 
     # Return: list<string>(MissingBlocks)
@@ -112,22 +108,25 @@ class MetadataServerHandler():
         # print MissingBlocks
         bService.CloseConnection()
         return MissingBlocks
-        pass
 
 
 # TODO: Add Try~Catch
 def main():
+    logging.basicConfig(level=logging.INFO)
+
     if len(sys.argv) < 3:
-        print "Invocation <config_file> <id>"
+        logging.error("Invocation <config_file> <id>")
         exit(-1)
 
     config_path = sys.argv[1]
 
     my_id = sys.argv[2]
 
-    print "Initializing metadata server"
+    # TODO: Add logging level change to config file.
 
     handler = MetadataServerHandler(config_path, my_id)
+
+    handler.logger.info("Initializing metadata server")
 
     ThisServerNum = "metadata" + my_id
 
@@ -141,7 +140,7 @@ def main():
 
     # Create a server object
     server = TServer.TSimpleServer(processor, transport, tfactory, pfactory)
-    print "Starting server on port : ", port
+    handler.logger.info("Starting server on port : %s", str(port))
 
     server.serve()
 

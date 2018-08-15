@@ -2,6 +2,7 @@
 
 import sys
 import os
+import logging
 
 sys.path.append('gen-py')
 
@@ -10,19 +11,20 @@ from UDC import UDC
 
 def OutputResponseToConsole(response):
     if response == uploadResponseType.MISSING_BLOCKS:
-        print "MISSING BLOCKS"
+        logging.info("MISSING BLOCKS")
     elif response == uploadResponseType.FILE_ALREADY_PRESENT:
-        print "FILE ALREADY PRESENT"
+        logging.info("FILE ALREADY PRESENT")
     elif response == uploadResponseType.OK:
-        print "OK"
+        logging.info("OK")
     elif response == uploadResponseType.ERROR:
-        print "ERROR"
+        logging.info("ERROR")
     else:
-        print "UNKNOWN RESPONSE"
+        logging.info("UNKNOWN RESPONSE")
 
 def main():
 
-    print "Starting Client"
+    logging.basicConfig(level=logging.INFO)
+    logging.info("Starting Client")
 
     singleton = UDC(sys.argv)
 
@@ -37,15 +39,15 @@ def main():
     singleton.storeLocalFiles(every_file)
 
     if operation_type == "upload":
-        print "Upload"
+        logging.info("Uploading : " + file_name)
         result = singleton.upload(file_name)
         OutputResponseToConsole(result)
     elif operation_type == "download":
-        print "Download"
+        logging.info("Downloading : " + file_name)
         result = singleton.download(file_name)
         OutputResponseToConsole(result)
     elif operation_type == "delete":
-        print "Delete"
+        logging.info("Deleting : " + file_name)
         singleton.delete(file_name)
     else:
         print "INPUT ERROR"
