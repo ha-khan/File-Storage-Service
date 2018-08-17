@@ -61,6 +61,7 @@ class MetadataServerHandler():
             resp.status = uploadResponseType.MISSING_BLOCKS
         else:
             self.logger.info("File %s : OK", file.filename)
+            self.logger.info("File HASH : %s", file.hashList)
             self.FileHashList[file.filename] = file.hashList
             resp = uploadResponse()
             resp.hashList = MissingList
@@ -112,7 +113,7 @@ class MetadataServerHandler():
 
 # TODO: Add Try~Catch
 def main():
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.INFO, format='{"level" : "%(levelname)s", "name" : "%(name)s", "msg" : "%(message)s", "timestamp" : "%(asctime)-15s"}')
 
     if len(sys.argv) < 3:
         logging.error("Invocation <config_file> <id>")
