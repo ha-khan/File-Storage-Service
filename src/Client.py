@@ -21,6 +21,7 @@ def OutputResponseToConsole(response):
     else:
         logging.info("UNKNOWN RESPONSE")
 
+
 def main():
 
     logging.basicConfig(level=logging.INFO)

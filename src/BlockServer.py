@@ -30,7 +30,7 @@ class BlockServerHandler():
         self.blocks = {}  # Hash -> Block
         pass
 
-    # Input: hashBlock(hachBlock)
+    # Input: hashBlock(hashBlock)
     # Return: response(r)
     def storeBlock(self, hashBlock):
         if not hashBlock.hash in self.blocks:

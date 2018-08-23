@@ -53,7 +53,7 @@ class MetadataServerHandler():
     # TODO: Add an error case..
     def storeFile(self, file):
         self.logger.info("Attempting to store file : %s", file.filename)
-        MissingList = self.__CheckForBlockList(file.hashList)
+        MissingList = self._CheckForBlockList(file.hashList)
         if len(MissingList) != 0:
             self.logger.info("File %s : MISSING_BLOCKS", file.filename)
             resp = uploadResponse()
@@ -94,7 +94,7 @@ class MetadataServerHandler():
 
     # Input: list<string>(HashList) 
     # Return: list<string>(MissingBlocks)
-    def __CheckForBlockList(self, HashList):
+    def _CheckForBlockList(self, HashList):
         # Search for port of block server from config.txt
         port = self.readServerPort("block")
         bService = BSS(port)
