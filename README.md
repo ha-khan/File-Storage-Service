@@ -14,9 +14,6 @@ the programs.
 
 ### Directory Structure
     .
-    ├── files                   # Folder where files are uploaded/downloaded.
-    ├── filestorage             # Virtualenv for this project.
-    ├── gen-py                  # Generated from thrift compiler.
     ├── scripts                 # Start up shell scripts for the (client, blockfile server, metadata server)
     ├── src                     # location of (client, blockfile server, metadata server) code along with thrift code.
     ├── tests                   # Location of testing files. 
@@ -25,8 +22,8 @@ the programs.
     └── requirements.txt 
 
 ### Starting the virtualenv
-This project uses virtualenv, and when running on your local system make sure that 
-you delete the filestorage file, which is the virtualenv on my system. Create a virtualenv on your system and name it what ever you want.
+This project uses virtualenv.
+
 ```
 $ source filestorage/bin/activate
 $ pip list
