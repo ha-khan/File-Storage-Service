@@ -4,9 +4,6 @@ namespace cpp blockServer
 namespace py blockServer
 namespace java blockServer
 
-/* The status field can be used to communicate state information
-	example, when the client requests a block that is not present
-	you can set the status as ERROR */
 
 typedef shared.response response
 
